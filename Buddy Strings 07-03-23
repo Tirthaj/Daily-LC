@@ -1,0 +1,31 @@
+class Solution:
+    def buddyStrings(self, s: str, goal: str) -> bool:
+        if len(s) != len(goal): return False
+        if s == goal:
+            return (len(set(s)) < len(s))
+        hmap = {}
+        for i in s:
+            if i not in hmap:
+                hmap[i] = 0
+            hmap[i] += 1
+        tempmap = dict(hmap)
+        # print(hmap)
+        for i in goal:
+            if i not in hmap: return False
+            hmap[i] -= 1
+            if hmap[i] < 0: return False
+        
+        misplaced = 0
+        sp = 0
+        goalp = 0
+        while sp < len(s):
+            if s[sp] != goal[goalp]:
+                misplaced += 1
+            sp += 1
+            goalp += 1
+        
+        # print(misplaced)
+        if misplaced == 2: return True
+
+        return False
+
